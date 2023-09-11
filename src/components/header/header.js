@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Button, Grid, useMediaQuery, useTheme, IconButton } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import headerImg from "../../images/header-img.svg";
-import { useAutoAnimate } from '@formkit/auto-animate/react'
-
+import Fade from 'react-reveal/Fade';
 const Header = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [showArrow, setShowArrow] = useState(true);
-  const [parent] = useAutoAnimate();
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY === 0) {
@@ -25,12 +24,12 @@ const Header = () => {
   }, []);
 
   return (
-    <Grid    elevation={3} style={{ padding: isMobile ? "30px" : "50px", paddingTop: isMobile ? "50px" : "100px" }}>
+    <Grid    elevation={3} style={{ padding: isMobile ? "30px" : "50px", paddingTop: isMobile ? "50px" : "100px",overflow:"hidden" }}>
       <Grid container alignItems="center" spacing={5}>
         
-        <Grid ref={parent} item xs={12} md={6}>
+        <Grid  item xs={12} md={6}>
 
-          
+          <Fade left>
           <Typography  variant="h3" style={{ fontWeight: "bolder", color: "#2D3748", fontSize: isMobile ? "40px" : "90px" }}>
             Turn your ideas into a<span style={{ color: "#1976D2" }}> success.</span>
           </Typography>
@@ -40,18 +39,20 @@ const Header = () => {
           <Button  variant="contained" color="primary">
             Get Started
           </Button>
+          </Fade>
         </Grid>
 
-       
+      
         <Grid item xs={12} md={6}>
+        <Fade right>
           <img
             src={headerImg}
             alt="Responsive Image"
-            style={{ maxWidth: '100%', height: 'auto' }}
-          />
+            style={{ maxWidth: '100%', height: 'auto', }}
+          /> </Fade>
         </Grid>
-
-        {/* Down arrow */}
+       
+        
         {showArrow && (
           <IconButton
             style={{
@@ -65,10 +66,11 @@ const Header = () => {
               animation: 'bounce 0.5s infinite',
             }}
           >
-            <KeyboardArrowDownIcon />
+           <Fade top> <KeyboardArrowDownIcon /></Fade>
           </IconButton>
         )}
       </Grid>
+    
     </Grid>
   );
 };

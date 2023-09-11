@@ -9,17 +9,17 @@ export const Colors = {
   // ### Secondary
   Red: "hsl(0, 87%, 67%)",
   // ### Neutral
-  Gray: " #0B666A",
+  Gray: "#0B666A",
   GrayishViolet: "hsl(257, 27%, 63%)",
   VeryDarkBlue: "hsl(255, 31%, 22%)",
-  VeryDarkViolet: "hsl(260, 8%, 14%)",
+  VeryDarkViolet: "hsl(260, 98%, 14%)",
 };
 
 let theme = createTheme({
 
   typography: {
     fontFamily: ["Poppins", "Roboto", "sans-serif"].join(","),
-    fontSize: 16,
+    fontSize: 20,
   },
   palette: {
     primary: {

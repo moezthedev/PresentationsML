@@ -15,6 +15,8 @@ import PasswordReset from './pages/authentication/PasswordReset/passwordReset';
 import ConfirmPassword from './pages/authentication/ConfirmPassword/confirmPassword';
 import VerifyEmail from './pages/authentication/verifyEmail/verifyEmail';
 import isUserLoggedIn from './reducers/isUserLoggedIn';
+import Main from './pages/Main/main';
+
 function App() {
   const dispatch = useDispatch()
   const userToken = useSelector((state) => state.userToken.userToken);
@@ -53,10 +55,10 @@ dispatch(isUserLoggedIn(true))
     <div>
       <Router>
       <Routes>
-      <Route element={<PrivateRoute />}>
+      {/* <Route element={<PrivateRoute />}> */}
         
           <Route path="/" element={<Home />} />
-          </Route>
+          {/* </Route> */}
           <Route element={<PrivateRegister />}>
       <Route  path="/register" element={<Register/>} />
       </Route>
@@ -64,6 +66,7 @@ dispatch(isUserLoggedIn(true))
       <Route path='/enter-email' element={<PasswordReset/>}/>
       <Route path='/reset-password' element={<ConfirmPassword/>}/>
       <Route path='/verify-email' element={<VerifyEmail/>}/>
+      <Route path='/app' element={<Main/>}/>
       </Routes>
       </Router>
 
