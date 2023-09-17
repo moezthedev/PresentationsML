@@ -1,0 +1,27 @@
+.menu {
+    position: fixed;
+    top: 0;
+    right: -300px; /* Start off the screen */
+    width: 250px;
+    height: 30%;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    transition: right 0.3s ease-in-out;
+  }
+  
+  .open {
+    right: 0;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  

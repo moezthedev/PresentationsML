@@ -95,7 +95,7 @@ const navigate = useNavigate()
   return (
     <AuthLayout>
       <Typography component="h1" variant="h4" sx={{ mb: 1, mt: 5, fontWeight: 'bold', textAlign: 'center' }}>
-        Welcome to Runway
+        Welcome to Slide Sync
       </Typography>
       <Typography component="h6" variant="h6" sx={{ mb: 5, color: '#726277' }}>
         Dont have an account?{' '}

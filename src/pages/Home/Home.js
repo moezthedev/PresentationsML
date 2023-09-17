@@ -36,7 +36,6 @@ const handleLogout = ()=>{
 <Shape/>
 <FeatureCards/>
 <Slider/>
-<Video/>
 <Footer/>
 
 

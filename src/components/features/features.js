@@ -8,7 +8,8 @@ import Fade from 'react-reveal/Fade';
 
 const FeatureCards = () => {
   return (
-    
+    <>
+    <Fade>
     <Container sx={{mt:14,mb:20}}>
       <Grid container spacing={3}>
         <Grid item xs={12} md={4}>
@@ -17,9 +18,9 @@ const FeatureCards = () => {
              <TipsAndUpdatesIcon sx={{height:"50px",width:"40px"}}/>
             </IconButton>
             <CardContent>
-              <Typography variant="h5" sx={{fontWeight:"bold"}}>Feature 1</Typography>
+              <Typography variant="h5" sx={{fontWeight:"bold"}}>User-Friendly Slide Editor</Typography>
               <Typography variant="body1">
-                This is the first feature of our app. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Implement alignment and arrangement tools for precise layout control.
               </Typography>
             </CardContent>
           </Card>
@@ -30,9 +31,9 @@ const FeatureCards = () => {
            < AddReactionIcon sx={{height:"50px",width:"40px"}}/>
             </IconButton>
             <CardContent>
-              <Typography variant="h5" sx={{fontWeight:"bold"}}>Feature 2</Typography>
+              <Typography variant="h5" sx={{fontWeight:"bold"}}>Templates and Themes</Typography>
               <Typography variant="body1">
-                This is the second feature of our app. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Includes options to customize templates and themes by changing colors, fonts, backgrounds, and more.
               </Typography>
             </CardContent>
           </Card>
@@ -43,9 +44,9 @@ const FeatureCards = () => {
             <ThumbUpAltIcon sx={{height:"50px",width:"40px"}}/>
             </IconButton>
             <CardContent>
-              <Typography variant="h5" sx={{fontWeight:"bold"}}>Feature 3</Typography>
+              <Typography variant="h5" sx={{fontWeight:"bold"}}>Export and Sharing Options</Typography>
               <Typography variant="body1">
-                This is the third feature of our app. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Provides sharing options to collaborate on presentations, allowing users to share a link with collaborators or embed slides on websites or blogs.
               </Typography>
             </CardContent>
           </Card>
@@ -53,6 +54,8 @@ const FeatureCards = () => {
       </Grid>
     
     </Container>
+    </Fade>
+    </>
   );
 };
 

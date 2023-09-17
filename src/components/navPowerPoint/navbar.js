@@ -10,6 +10,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Document, Page, Text, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer';
 import FormatColorTextIcon from '@mui/icons-material/FormatColorText';
 import Ppt from '../../components/ppt/ppt';
+import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 const styles = StyleSheet.create({
   bold: {
     fontWeight: '900',
@@ -118,12 +120,15 @@ const handleClick = () => {
     setSlideContent(updatedSlideContent);
   }
 };
-
+const navigate = useNavigate()
+const handleNavClick = ()=>{
+  navigate("/")
+}
 
   return (
     <AppBar position="static">
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Typography variant="h5">Present</Typography>
+        <Typography variant="h5" onClick={handleNavClick} style={{cursor:"pointer"}}>Present</Typography>
 <Typography>
 <div sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'rgba(255, 255, 255, 0.15)', borderRadius: '4px', padding: '5px', flexGrow: 1 }}>
           <InputBase sx={{ color: 'inherit', padding: '10px 30px 10px 12px', width: '100%' }} value={textareaValue} />

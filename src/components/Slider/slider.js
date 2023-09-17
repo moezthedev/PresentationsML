@@ -4,21 +4,46 @@ import { Paper, Button } from '@mui/material';
 import img from "../../images/background-card.jpg"
 import img2 from "../../images/slider-2.jpg"
 import img3 from "../../images/slider-3.jpg"
+import img4 from "../../images/slider-4.jpg"
+import img5 from "../../images/slider-5.jpg"
+import img6 from "../../images/slider-6.jpg"
+import img7 from "../../images/slider-7.jpg"
+import img8 from "../../images/slider-8.jpg"
+
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 const carouselItems = [
   {
     imageUrl: `${img}`,
-    caption: 'Image 1',
+    
   },
   {
     imageUrl: `${img2}`,
-    caption: 'Image 2',
+    
   },
   {
     imageUrl: `${img3}`,
-    caption: 'Image 3',
+   
   },
+  {
+    imageUrl: `${img4}`,
+   
+  },
+  {
+    imageUrl: `${img5}`,
+   
+  },
+  {
+    imageUrl: `${img6}`,
+   
+  },
+  {
+    imageUrl: `${img7}`,
+   
+  },{
+    imageUrl: `${img8}`,
+   
+  }
 ];
 
 const CarouselComponent = () => {
@@ -55,6 +80,7 @@ const CarouselComponent = () => {
 
   return (
     <div>
+      <h1 style={{textAlign:"center"}}>How Slide Sync worked?</h1>
       <Carousel
         index={activeIndex}
         autoPlay={true}
@@ -77,8 +103,9 @@ const CarouselComponent = () => {
 const Item = ({ item }) => {
   const itemStyle = {
     backgroundImage: `url(${item.imageUrl})`,
-    backgroundSize: 'cover',
+    backgroundSize: 'contain',
     backgroundPosition: 'center',
+    backgroundRepeat:"no-repeat",
     ...itemStyleBase,
   };
 

@@ -55,10 +55,10 @@ dispatch(isUserLoggedIn(true))
     <div>
       <Router>
       <Routes>
-      {/* <Route element={<PrivateRoute />}> */}
+      <Route element={<PrivateRoute />}>
         
           <Route path="/" element={<Home />} />
-          {/* </Route> */}
+          </Route>
           <Route element={<PrivateRegister />}>
       <Route  path="/register" element={<Register/>} />
       </Route>
@@ -67,6 +67,7 @@ dispatch(isUserLoggedIn(true))
       <Route path='/reset-password' element={<ConfirmPassword/>}/>
       <Route path='/verify-email' element={<VerifyEmail/>}/>
       <Route path='/app' element={<Main/>}/>
+
       </Routes>
       </Router>
 

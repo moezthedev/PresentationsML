@@ -1,7 +1,7 @@
 //verify-email?verification_key=854e3eb6aaf8d8ddd9db78a2ee2f6c45a0470dab
 import React, { useEffect, useState } from 'react';
 
-import { Link,useNavigate,useLocation } from 'react-router-dom';
+import { Link,useLocation } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import AuthLayout from '../AuthLayout';
@@ -16,7 +16,7 @@ const [message,setMessage] = useState("")
  
 
 const [isLoading, setIsLoading] = useState(false); 
-const navigate = useNavigate()
+
 useEffect(()=>{
     if(emailVerifyKey!==""){
     

@@ -7,7 +7,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Box from '@mui/material/Box';
 import Navbar from '../../components/navPowerPoint/navbar';
 import { ConvertToHighlight } from '../../functions/convertToHighligh';
-
+import Menu from '../../components/menu/menu';
 
 
 const Slider = ({ setTextareaValue, slideTopics, slideContent, setnoofslides,textareaValue,setSlideContent}) => {
@@ -33,7 +33,9 @@ const Slider = ({ setTextareaValue, slideTopics, slideContent, setnoofslides,tex
   return (
       
     <div>
+      
     <Navbar activeIndex={activeIndex} slideTopics={slideTopics} textareaValue={textareaValue} slideContent={slideContent} setSlideContent={setSlideContent}/>
+    <Menu/>
       {!showSlider ? (
         <form
           onSubmit={handleFormSubmit}
