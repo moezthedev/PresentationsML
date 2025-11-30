@@ -1,154 +1,287 @@
-import React, { useState } from 'react';
-import './slider.css';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import { useSelector } from 'react-redux';
-import Skeleton from '@mui/material/Skeleton';
-import Box from '@mui/material/Box';
-import Navbar from '../../components/navPowerPoint/navbar';
-import { ConvertToHighlight } from '../../functions/convertToHighligh';
-import Menu from '../../components/menu/menu';
+import React, { useState, useCallback } from "react";
+import "./slider.css";
+import {
+  Button,
+  TextField,
+  Box,
+  Paper,
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  LinearProgress,
+  IconButton,
+  Chip,
+} from "@mui/material";
+import { useSelector } from "react-redux";
+import Skeleton from "@mui/material/Skeleton";
+import Navbar from "../../components/navPowerPoint/navbar";
+import { ConvertToHighlight } from "../../functions/convertToHighligh";
+import Menu from "../../components/menu/menu";
+import { motion, AnimatePresence } from "framer-motion";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import debounce from "lodash.debounce";
 
-
-const Slider = ({ setTextareaValue, slideTopics, slideContent, setnoofslides,textareaValue,setSlideContent}) => {
+const Slider = ({
+  setTextareaValue,
+  slideTopics,
+  slideContent,
+  setnoofslides,
+  textareaValue,
+  setSlideContent,
+}) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [showSlider, setShowSlider] = useState(false);
   const isLoading = useSelector((state) => state.isLoading.isLoading);
-
 
   const goToSlide = (index) => {
     setActiveIndex(index);
   };
 
+  const debouncedSetTextareaValue = useCallback(
+    debounce(setTextareaValue, 500),
+    [setTextareaValue]
+  );
+  const debouncedSetNoOfSlides = useCallback(debounce(setnoofslides, 500), [
+    setnoofslides,
+  ]);
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    setTextareaValue(event.target.elements.textareavalue.value);
-    setnoofslides(event.target.elements.noofslides.value);
+    const topic = event.target.elements.textareaValue.value;
+    const slides = event.target.elements.noofslides.value;
+    debouncedSetTextareaValue(topic);
+    debouncedSetNoOfSlides(slides);
     setShowSlider(true);
   };
 
- 
- 
+  const nextSlide = () => {
+    setActiveIndex((prev) => (prev + 1) % slideTopics.length);
+  };
+
+  const prevSlide = () => {
+    setActiveIndex(
+      (prev) => (prev - 1 + slideTopics.length) % slideTopics.length
+    );
+  };
+
+  const slideVariants = {
+    enter: { opacity: 0, x: 100 },
+    center: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -100 },
+  };
+
+  const MemoizedSlide = React.memo(({ content, title, index }) => (
+    <motion.div
+      key={index}
+      variants={slideVariants}
+      initial="enter"
+      animate="center"
+      exit="exit"
+      transition={{ duration: 0.5 }}
+      style={{ width: "100%", height: "100%" }}
+    >
+      <Card
+        sx={{
+          height: "100%",
+          p: 3,
+          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+          color: "white",
+        }}
+      >
+        <CardContent>
+          <Typography variant="h4" gutterBottom sx={{ fontWeight: "bold" }}>
+            {title}
+          </Typography>
+          <Box component="ul" sx={{ pl: 2 }}>
+            {content?.split("\n")?.map((point, pointIndex) => (
+              <Typography
+                key={pointIndex}
+                component="li"
+                sx={{ mb: 1, fontSize: "1.1rem" }}
+              >
+                {ConvertToHighlight(point)}
+              </Typography>
+            ))}
+          </Box>
+        </CardContent>
+      </Card>
+    </motion.div>
+  ));
 
   return (
-      
-    <div>
-      
-    <Navbar activeIndex={activeIndex} slideTopics={slideTopics} textareaValue={textareaValue} slideContent={slideContent} setSlideContent={setSlideContent}/>
-    <Menu/>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        background: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+      }}
+    >
+      <Navbar
+        activeIndex={activeIndex}
+        slideTopics={slideTopics}
+        textareaValue={textareaValue}
+        slideContent={slideContent}
+        setSlideContent={setSlideContent}
+      />
+      <Menu />
       {!showSlider ? (
-        <form
+        <Box
+          component="form"
           onSubmit={handleFormSubmit}
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            flexDirection: 'column',
-            height: '100vh',
-            gap: '20px',
-            overflow: 'hidden',
-            backgroundColor: '#96CCD1',
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "100vh",
+            p: 2,
           }}
-          className="search-form"
         >
-          <textarea
-            name="textareaValue"
-            id="textareavalue"
-            rows={15}
-            cols={70}
-            placeholder="Enter your content..."
-            style={{
-              padding: '10px',
-              borderRadius: '5px',
-              border: '1px solid #ccc',
-              resize: 'vertical',
-              width: '80%',
-              fontSize: '16px',
-            }}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            size="small"
-            name="noofslides"
-            label="noofslides"
-            sx={{
-              mt: 1,
-              width: '300px',
-            }}
-          />
-          <Button type="submit" variant="contained" sx={{ mb: 2 }}>
-            Submit
-          </Button>
-        </form>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Paper
+              elevation={10}
+              sx={{
+                p: 4,
+                maxWidth: 600,
+                width: "100%",
+                borderRadius: 3,
+                background: "rgba(255,255,255,0.9)",
+              }}
+            >
+              <Typography
+                variant="h4"
+                gutterBottom
+                align="center"
+                sx={{ fontWeight: "bold", color: "#333" }}
+              >
+                Create Your Presentation
+              </Typography>
+              <TextField
+                name="textareaValue"
+                multiline
+                rows={8}
+                placeholder="Enter your topic or content..."
+                fullWidth
+                variant="outlined"
+                sx={{ mb: 3, "& .MuiOutlinedInput-root": { borderRadius: 2 } }}
+              />
+              <TextField
+                name="noofslides"
+                type="number"
+                label="Number of Slides"
+                fullWidth
+                variant="outlined"
+                sx={{ mb: 3, "& .MuiOutlinedInput-root": { borderRadius: 2 } }}
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                fullWidth
+                sx={{
+                  py: 1.5,
+                  fontSize: "1.1rem",
+                  background:
+                    "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+                }}
+              >
+                Generate Slides
+              </Button>
+            </Paper>
+          </motion.div>
+        </Box>
       ) : (
-        <div className="slider-container">
-          <div className="slides-outline">
-            {slideTopics && slideTopics?.length === 0 ? (
-               <Box sx={{ width: 300 }}>
-               <Skeleton sx={{mt:3,height:30}}/>
-               <Skeleton sx={{mt:3,height:30}}animation="wave" />
-               <Skeleton sx={{mt:3,height:30}} animation={false} />
-               <Skeleton sx={{mt:3,height:30}} animation="wave" />
-               <Skeleton sx={{mt:3,height:30}}animation="wave" />
-               <Skeleton sx={{mt:3,height:30}} animation="wave" />
-               <Skeleton sx={{mt:3,height:30}} animation="wave" />
-               <Skeleton sx={{mt:3,height:30}} animation="wave" />
-               <Skeleton sx={{mt:3,height:30}} animation="wave" />
-             </Box>
-            ) : (
-              slideTopics?.map((content, index) => (
-                <div
-                  key={index}
-                  className={`slide-outline ${index === activeIndex ? 'active' : ''}`}
-                  onClick={() => goToSlide(index)}
-                >
-                  <span className="slide-number"> {index + 1}</span>
-                  <span className="zoomed-out-content">{content?.slice(0, 200)}</span>
-                </div>
-              ))
-            )}
-          </div>
-          <div className="slider">
-            <div className="slides" style={{ transform: `translateX(-${activeIndex * 100}%)` }}>
-              {isLoading ? (
-                <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                   <Box sx={{ width: 1000 }}>
-      <Skeleton sx={{m:5,height:50,width: 1000}} />
-      <Skeleton sx={{m:5,height:50,width: 1000}} animation="wave" />
-      <Skeleton sx={{m:5,height:50,width: 1000}} animation={false} />
-      <Skeleton sx={{m:5,height:50,width: 1000}} animation="wave" />
-      <Skeleton sx={{m:5,height:50,width: 1000}} animation={false} />
-      <Skeleton sx={{m:5,height:50,width: 1000}} animation="wave"/>  
-      <Skeleton sx={{m:5,height:50,width: 1000}} animation="wave"/>  
-      
-    </Box>
-                </div>
-              ) : (
-                
-                slideContent?.map((content, index) => (
-
-                  <div key={index} className={`slide ${index === activeIndex ? 'active' : ''}`}>
-                                      <h2>{slideTopics[index]}</h2>
-                    <ul>
-                      {content?.split('\n')?.map((point, pointIndex) => (
-                        <p key={pointIndex}>{ConvertToHighlight(point)}</p>
-                      ))}
-                    </ul>
-                  </div>
-                  
+        <Grid container sx={{ height: "calc(100vh - 64px)" }}>
+          <Grid
+            item
+            xs={3}
+            sx={{ p: 2, background: "#f0f0f0", overflowY: "auto" }}
+          >
+            <Typography variant="h6" sx={{ mb: 2, fontWeight: "bold" }}>
+              Slide Outline
+            </Typography>
+            {slideTopics?.length === 0
+              ? Array.from({ length: 5 }).map((_, i) => (
+                  <Skeleton key={i} sx={{ mb: 1, height: 40 }} />
                 ))
+              : slideTopics?.map((content, index) => (
+                  <Chip
+                    key={index}
+                    label={`${index + 1}. ${content?.slice(0, 30)}...`}
+                    onClick={() => goToSlide(index)}
+                    sx={{
+                      mb: 1,
+                      width: "100%",
+                      justifyContent: "flex-start",
+                      background: index === activeIndex ? "#667eea" : "#e0e0e0",
+                      color: index === activeIndex ? "white" : "black",
+                      "&:hover": { background: "#764ba2", color: "white" },
+                    }}
+                  />
+                ))}
+          </Grid>
+          <Grid item xs={9} sx={{ position: "relative", p: 2 }}>
+            <Box sx={{ height: "100%", position: "relative" }}>
+              {isLoading ? (
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: "100%",
+                  }}
+                >
+                  <LinearProgress sx={{ width: "80%", mb: 2 }} />
+                  <Typography>Generating slides...</Typography>
+                </Box>
+              ) : (
+                <AnimatePresence mode="wait">
+                  <MemoizedSlide
+                    content={slideContent[activeIndex]}
+                    title={slideTopics[activeIndex]}
+                    index={activeIndex}
+                  />
+                </AnimatePresence>
               )}
-            </div>
-          </div>
-        </div>
+              {!isLoading && slideTopics.length > 1 && (
+                <>
+                  <IconButton
+                    onClick={prevSlide}
+                    sx={{
+                      position: "absolute",
+                      left: 10,
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      background: "rgba(0,0,0,0.5)",
+                      color: "white",
+                    }}
+                  >
+                    <ArrowBackIcon />
+                  </IconButton>
+                  <IconButton
+                    onClick={nextSlide}
+                    sx={{
+                      position: "absolute",
+                      right: 10,
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      background: "rgba(0,0,0,0.5)",
+                      color: "white",
+                    }}
+                  >
+                    <ArrowForwardIcon />
+                  </IconButton>
+                </>
+              )}
+            </Box>
+          </Grid>
+        </Grid>
       )}
-
-     
-
-
-    </div>
+    </Box>
   );
 };
 

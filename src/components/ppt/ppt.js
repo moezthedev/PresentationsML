@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import pptxgen from 'pptxgenjs';
+import React, { useState } from "react";
+import pptxgen from "pptxgenjs";
 import ppt from "../../images/ppt.jpg";
 import ppt1 from "../../images/ppt1.jpg";
 import ppt2 from "../../images/ppt2.jpg";
-import { Button, Menu, MenuItem, Typography } from '@mui/material';
-import {Stack} from '@mui/material';
+import { Button, Menu, MenuItem, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 const Ppt = ({ slideTopics, slideContent }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedBackground, setSelectedBackground] = useState();
@@ -26,9 +26,9 @@ const Ppt = ({ slideTopics, slideContent }) => {
       slide.addText(slideTopics[i]?.substring(0, 100), {
         x: 1,
         y: 1.3,
-        fontFace: 'Arial',
+        fontFace: "Arial",
         fontSize: 20,
-        color: '000000',
+        color: "000000",
         fontWeight: 900,
       });
 
@@ -37,22 +37,17 @@ const Ppt = ({ slideTopics, slideContent }) => {
       slide.addText(slideContent[i], {
         x: 1,
         y: yOffset,
-        fontFace: 'Arial',
+        fontFace: "Arial",
         fontSize: 10,
-        color: '000000',
-      
+        color: "000000",
       });
     }
 
-    pptx.writeFile('presentation');
+    pptx.writeFile("presentation");
   };
 
   const handleOpenMenu = (event) => {
-    
-    
-  
-      setAnchorEl(event.currentTarget);
-   
+    setAnchorEl(event.currentTarget);
   };
 
   const handleCloseMenu = () => {
@@ -60,25 +55,17 @@ const Ppt = ({ slideTopics, slideContent }) => {
   };
 
   const handleBackgroundChange = (backgroundImage) => {
-  
-    
-      
-   
-      
-        setSelectedBackground(backgroundImage);
-        handleCloseMenu(); 
-        generatePpt(backgroundImage)
-    
-
+    setSelectedBackground(backgroundImage);
+    handleCloseMenu();
+    generatePpt(backgroundImage);
   };
 
   return (
     <div>
       <Button
-        style={{ marginTop: '2px' }}
+        style={{ marginTop: "2px" }}
         onClick={handleOpenMenu}
         variant="outline"
-        
       >
         Generate PowerPoint
       </Button>
@@ -86,16 +73,30 @@ const Ppt = ({ slideTopics, slideContent }) => {
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={handleCloseMenu}
-        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+        anchorOrigin={{ vertical: "top", horizontal: "left" }}
+        transformOrigin={{ vertical: "top", horizontal: "left" }}
         getContentAnchorEl={null}
-      
       >
-        <Stack sx={{p:2}}>
-          <Typography sx={{pl:4}}>Select Theme</Typography>
-        <MenuItem onClick={() => handleBackgroundChange(ppt)}><img style={{width:"150px"}} src={ppt}/></MenuItem>
-        <MenuItem onClick={() => handleBackgroundChange(ppt1)}><img style={{width:"150px"}} src={ppt1}/></MenuItem>
-        <MenuItem onClick={() => handleBackgroundChange(ppt2)}><img style={{width:"150px"}} src={ppt2}/></MenuItem>
+        <Stack sx={{ p: 2 }}>
+          <Typography sx={{ pl: 4 }}>Select Theme</Typography>
+          <MenuItem onClick={() => handleBackgroundChange(ppt)}>
+            <img style={{ width: "150px" }} src={ppt} alt="Theme 1" />
+          </MenuItem>
+          <MenuItem onClick={() => handleBackgroundChange(ppt1)}>
+            <img style={{ width: "150px" }} src={ppt1} alt="Theme 2" />
+          </MenuItem>
+          <MenuItem onClick={() => handleBackgroundChange(ppt2)}>
+            <img style={{ width: "150px" }} src={ppt2} alt="Theme 3" />
+          </MenuItem>
+          <MenuItem onClick={() => handleBackgroundChange(ppt)}>
+            <img style={{ width: "150px" }} src={ppt} alt="Theme 4" />
+          </MenuItem>
+          <MenuItem onClick={() => handleBackgroundChange(ppt1)}>
+            <img style={{ width: "150px" }} src={ppt1} alt="Theme 5" />
+          </MenuItem>
+          <MenuItem onClick={() => handleBackgroundChange(ppt2)}>
+            <img style={{ width: "150px" }} src={ppt2} alt="Theme 6" />
+          </MenuItem>
         </Stack>
       </Menu>
     </div>

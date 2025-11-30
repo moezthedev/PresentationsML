@@ -10,34 +10,55 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import logo from "../../images/logo.png";
-import { useDispatch, useSelector } from 'react-redux';
-import {setisUserLoggedIn} from "../../reducers/isUserLoggedIn";
-import {  useNavigate } from "react-router-dom";
-const pages = ["Home", "Products", "Blog", "About US"];
+import HomeIcon from "@mui/icons-material/Home";
+import InfoIcon from "@mui/icons-material/Info";
+import ArticleIcon from "@mui/icons-material/Article";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
-function ResponsiveAppBar({handleLogout,name}) {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+const pages = [
+  { name: "Home", icon: <HomeIcon /> },
+  { name: "Products", icon: <ShoppingCartIcon /> },
+  { name: "Blog", icon: <ArticleIcon /> },
+  { name: "About US", icon: <InfoIcon /> },
+];
+
+function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const isUserLoggedIn = useSelector((state) => state.isUserLoggedIn.isUserLoggedIn);
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-if(name){
-  dispatch(setisUserLoggedIn(true))
-} else if(!name){
-  dispatch(setisUserLoggedIn(false))
-}
+
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
   return (
-    <AppBar position="static" style={{ backgroundColor: "#0B666A" }}>
+    <AppBar
+      position="static"
+      sx={{
+        background: "rgba(255, 255, 255, 0.1)",
+        backdropFilter: "blur(10px)",
+        boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+        borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-            <Box sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}>  <img src={logo} style={{ width: "60px" }} alt="Company Logo" /></Box>
-        
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex" },
+              mr: 2,
+              alignItems: "center",
+            }}
+          >
+            <img
+              src={logo}
+              style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+              alt="Company Logo"
+            />
+          </Box>
+
           <Typography
             variant="h6"
             noWrap
@@ -46,11 +67,15 @@ if(name){
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
+              fontFamily: "'Poppins', sans-serif",
               fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
+              letterSpacing: ".2rem",
+              color: "#fff",
               textDecoration: "none",
+              background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              fontSize: "1.5rem",
             }}
           >
             SlideSync
@@ -59,11 +84,12 @@ if(name){
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
-              aria-label="account of current user"
+              aria-label="open menu"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
               color="inherit"
+              sx={{ color: "#fff" }}
             >
               <MenuIcon />
             </IconButton>
@@ -83,32 +109,51 @@ if(name){
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: "block", md: "none" },
+                "& .MuiPaper-root": {
+                  background: "rgba(255, 255, 255, 0.9)",
+                  backdropFilter: "blur(10px)",
+                },
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem
+                  key={page.name}
+                  onClick={handleCloseNavMenu}
+                  sx={{ display: "flex", alignItems: "center" }}
+                >
+                  {page.icon}
+                  <Typography textAlign="center" sx={{ ml: 1 }}>
+                    {page.name}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          
-          
-          <Box sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}>  <img src={logo} style={{ width: "60px" }} alt="Company Logo" /></Box>
+
+          <Box sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}>
+            <img
+              src={logo}
+              style={{ width: "40px", height: "40px", borderRadius: "50%" }}
+              alt="Company Logo"
+            />
+          </Box>
           <Typography
-            variant="h5"
+            variant="h6"
             noWrap
             component="a"
-            href=""
+            href="/"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
-              fontFamily: "monospace",
+              fontFamily: "'Poppins', sans-serif",
               fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
+              letterSpacing: ".2rem",
+              color: "#fff",
               textDecoration: "none",
+              background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
             }}
           >
             SlideSync
@@ -116,25 +161,30 @@ if(name){
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page.name}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{
+                  my: 2,
+                  color: "#fff",
+                  display: "flex",
+                  alignItems: "center",
+                  mx: 1,
+                  "&:hover": {
+                    background: "rgba(255, 255, 255, 0.1)",
+                    transform: "scale(1.05)",
+                  },
+                  transition: "all 0.3s ease",
+                }}
+                startIcon={page.icon}
               >
-                {page}
+                {page.name}
               </Button>
             ))}
-          </Box>
-<Box sx={{flexGrow:0,mb:0.75,mr:0.5}}>{name?name:''}</Box>
-          <Box sx={{ flexGrow: 0 }}>
-            {isUserLoggedIn ? (
-              <Button onClick={handleLogout} style={{ color: "white" }}>Logout</Button>
-            ) : (
-              <Button onClick={()=>navigate("/login")} style={{ color: "white" }}>Login</Button>
-            )}
           </Box>
         </Toolbar>
       </Container>
     </AppBar>
   );
 }
+
 export default ResponsiveAppBar;
